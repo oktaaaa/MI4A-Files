@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FakultasController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,6 +40,9 @@ Route::get('/jadwal', function(){
 });
 
 // route + data
-Route::get('/fakultas', function(){
-   return view('fakultas.index')->with('fakultas', ['fakultas ilmu komputer', 'ilmu komputer']); 
-});
+// Route::get('/fakultas', function(){
+//    return view('fakultas.index')->with('fakultas', ['fakultas ilmu komputer', 'ilmu komputer']); 
+// });
+
+// route resouce
+Route::resource('fakultas', FakultasController::class);
