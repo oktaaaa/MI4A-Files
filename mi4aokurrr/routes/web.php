@@ -34,7 +34,7 @@ Route::get('/dosen', function(){
     return view('dosen');
 });
 
-Route::get('jadwal', function(){
+Route::get('/jadwal', function(){
     return view('jadwal.index');
 });
 

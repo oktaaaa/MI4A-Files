@@ -1,8 +1,12 @@
-<h2>Fakultas</h2>
-Ini adalah halaman fakultas
+@extends('layout.master')
+@section('judul_halaman', 'Halaman Fakultas')
 
-<ul>
-    @foreach ($fakultas as $item)
-    <li>{{$item}}</li>
-    @endforeach
-</ul>
+@section('content')
+    <h2>Fakultas</h2>
+    ini adalah halaman fakultas
+    <ul>
+        @foreach ($fakultas as $item)
+            <li>{{ $item }}</li>
+        @endforeach
+    </ul>
+@endsection
