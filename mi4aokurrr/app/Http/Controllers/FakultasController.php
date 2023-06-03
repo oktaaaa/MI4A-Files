@@ -35,7 +35,7 @@ class FakultasController extends Controller
         //ini tu untuk liat whether or not the data is inputted
         // dd($request);
         $validasi = $request -> validate([
-            'nama_fakultas' => 'required',
+            'nama_fakultas' => 'required|unique:fakultas',
             'nama_dekan' => 'required',
             'nama_wakil_dekan' => 'required'
         ]);
