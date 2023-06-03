@@ -24,6 +24,7 @@ class FakultasController extends Controller
     public function create()
     {
         //
+        return view('fakultas.create');
     }
 
     /**
@@ -31,7 +32,22 @@ class FakultasController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //ini tu untuk liat whether or not the data is inputted
+        // dd($request);
+        $validasi = $request -> validate([
+            'nama_fakultas' => 'required',
+            'nama_dekan' => 'required',
+            'nama_wakil_dekan' => 'required'
+        ]);
+
+        $fakultas = new Fakultas();
+        $fakultas-> nama_fakultas = $validasi['nama_fakultas'];
+        $fakultas-> nama_dekan  = $validasi['nama_dekan'];
+        $fakultas-> nama_wakil_dekan = $validasi['nama_wakil_dekan'];
+
+        $fakultas->save();
+        return redirect() -> route('fakultas.index') -> with('success', 'Data berhasil disimpan');
+
     }
 
     /**
