@@ -7,6 +7,14 @@
       <div class="card">
         <div class="card-body">
           <h4 class="card-title">Prodi</h4>
+          @if(Session::get('success'))
+            <div class = "alert alert-success">
+              {{Session::get('success')}}
+            </div>
+          @endif
+          <div class="text-right">
+            <a href = "{{ route('prodi.create')}}" type="button" class="btn btn-info btn-rounded btn-fw">Tambah</a>
+          </div>
           <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
