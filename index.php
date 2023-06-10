@@ -28,7 +28,7 @@ $mahasiswa = ["rizky", "agung", "okta", "rindi", "ribka"];
 echo "<h2>Mahasiswa</h2>";
 // tampil array
 
-foreach($mahasiswa as $item){
+foreach($mahasiswas as $item){
     echo $item;
     echo "<br>";
 }
