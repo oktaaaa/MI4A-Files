@@ -80,6 +80,10 @@ class MahasiswaController extends Controller
     public function edit(Mahasiswa $mahasiswa)
     {
         //
+        $prodi = Prodi::orderBy('nama_prodi', 'ASC') -> get();
+        return view('mahasiswa.edit')
+        ->with('mahasiswa', $mahasiswa)
+        ->with('prodi', $prodi);
     }
 
     /**
@@ -88,6 +92,24 @@ class MahasiswaController extends Controller
     public function update(Request $request, Mahasiswa $mahasiswa)
     {
         //
+        $mahasiswa = new Mahasiswa;
+        $mahasiswa->npm = $request->input('npm');
+        $mahasiswa->nama = $request->input('nama');
+        $mahasiswa->tanggal = $request->input('tanggal');
+        if($request->hasfile('foto'))
+        {
+            $file = $request->file('foto');
+            $extention = $file->getClientOriginalExtension();
+            $filename = time().'.'.$extention;
+            $file->move('public/images/', $filename);
+            $mahasiswa->foto = $filename;
+        }
+        $mahasiswa->prodi_id = $request-> input('prodi_id');
+        $mahasiswa->save();
+        
+        return redirect() -> route ('mahasiswa.index') -> with('success', 'Data berhasil disimpan');  
+
+        
     }
 
     /**
@@ -96,5 +118,7 @@ class MahasiswaController extends Controller
     public function destroy(Mahasiswa $mahasiswa)
     {
         //
+        $mahasiswa->delete();
+        return back();
     }
 }
