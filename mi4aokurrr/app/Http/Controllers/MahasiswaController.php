@@ -113,19 +113,15 @@ class MahasiswaController extends Controller
             'foto' => 'required|file|image',
             'prodi_id' => 'required'
         ]);
-
-        $mahasiswa = new Mahasiswa();
-        $mahasiswa->npm = $validasi['npm'];
-        $mahasiswa->nama = $validasi['nama'];
-        $mahasiswa->tanggal = $validasi['tanggal'];
-        $mahasiswa->prodi_id = $validasi['prodi_id'];
-
         // upload foto
 
         $ext = $request -> foto -> getClientOriginalExtension();
         $new_filename = $validasi['npm'] . '.' . $ext;
         $request -> foto -> storeAs('public', $new_filename);
 
+        $validasi['foto']= $new_filename;
+        
+        Mahasiswa::where('id', $mahasiswa->id) -> update($validasi);
         $mahasiswa -> foto = $new_filename;
         $mahasiswa -> save();
         return redirect() -> route ('mahasiswa.index') -> with('success', 'Data berhasil disimpan' . $validasi['nama']);  
