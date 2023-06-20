@@ -135,6 +135,7 @@ class MahasiswaController extends Controller
     public function destroy(Mahasiswa $mahasiswa)
     {
         //
+        $this->authorize('delete', $mahasiswa);
         $mahasiswa->delete();
         return back();
     }

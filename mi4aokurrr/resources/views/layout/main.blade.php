@@ -51,6 +51,22 @@
             <span class="menu-title">Mahasiswa</span>
           </a>
       </li>
+        
+        
+        <li class="nav-item">
+          <!-- Authentication -->
+          <form method="POST" action="{{ route('logout') }}">
+            @csrf
+
+            <a class="nav-link" href="route('logout')"
+                    onclick="event.preventDefault();
+                                this.closest('form').submit();">
+                <i class="mdi mdi-view-quilt menu-icon"></i>                
+                {{ __('Log Out') }}
+            </a>
+        </form>
+
+        </li>
         <li class="nav-item sidebar-category">
           <p>Components</p>
           <span></span>
@@ -141,7 +157,7 @@
             <a class="navbar-brand brand-logo" href="index.html"><img src="{{url('images/logo.svg')}}" alt="logo"/></a>
             <a class="navbar-brand brand-logo-mini" href="index.html"><img src="{{url('images/logo-mini.svg')}}" alt="logo"/></a>
           </div>
-          <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1">Welcome back, Brandon Haynes</h4>
+          <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1">Welcome back, {{Auth::user() -> name}}</h4>
           <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item">
               <h4 class="mb-0 font-weight-bold d-none d-xl-block">Mar 12, 2019 - Apr 10, 2019</h4>
