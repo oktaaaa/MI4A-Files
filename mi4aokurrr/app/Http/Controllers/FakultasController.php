@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\API\BaseController;
 use App\Models\Fakultas;
 use Illuminate\Http\Request;
+use Spatie\FlareClient\Context\BaseContextProviderDetector;
 
-class FakultasController extends Controller
+class FakultasController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +17,8 @@ class FakultasController extends Controller
         //
         $fakultas = Fakultas::all();
         // dd($fakultas);
-        return view ('fakultas.index') -> with('fakultas', $fakultas);
+        // return view ('fakultas.index') -> with('fakultas', $fakultas);
+        return $this->sendSuccess($fakultas, 'Data Fakultas', 200);
     }
 
     /**

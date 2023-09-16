@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\API\BaseController;
 use App\Models\Fakultas;
 use App\Models\Prodi;
 use Illuminate\Http\Request;
 
-class ProdiController extends Controller
+class ProdiController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +16,8 @@ class ProdiController extends Controller
     {
         //
         $prodi = Prodi::all();
-        return view('prodi.index') -> with('prodi', $prodi);
+        // return view('prodi.index') -> with('prodi', $prodi);
+        return $this->sendSuccess($prodi, 'Data Prodi', 200);
     }
 
     /**
