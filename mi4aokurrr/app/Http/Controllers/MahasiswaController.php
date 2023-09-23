@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\API\BaseController;
 use App\Models\Mahasiswa;
 use App\Models\Prodi;
 use Illuminate\Http\Request;
 
-class MahasiswaController extends Controller
+class MahasiswaController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +15,8 @@ class MahasiswaController extends Controller
     public function index()
     {
         //
-        $mahasiswas = Mahasiswa::all();
-        return view('mahasiswa.index') -> with('mahasiswas', $mahasiswas);
+        $mahasiswas = Mahasiswa::with('prodi.fakultas')->get();
+        return $this->sendSuccess($mahasiswas, 'Data Mahasiswa', 200);
     }
 
     /**
@@ -43,20 +44,31 @@ class MahasiswaController extends Controller
             'prodi_id' => 'required'
         ]);
 
-        $mahasiswa = new Mahasiswa();
-        $mahasiswa->npm = $validasi['npm'];
-        $mahasiswa->nama = $validasi['nama'];
-        $mahasiswa->tanggal = $validasi['tanggal'];
-        $mahasiswa->prodi_id = $validasi['prodi_id'];
+        $ext = $request ->foto->getClientOriginalExtension();
+        
+        // rename
+        $file_baru = $request->npm.".".$ext;
+        
+        // upload
+        $file = $request->file('foto');
+        $file->move('public', $file_baru);
+        $validasi['foto'] = $file_baru;
+        $result = Mahasiswa::create($validasi);
+        return $this ->sendSuccess($result, 'Ditambah', 201);
+        // $mahasiswa = new Mahasiswa();
+        // $mahasiswa->npm = $validasi['npm'];
+        // $mahasiswa->nama = $validasi['nama'];
+        // $mahasiswa->tanggal = $validasi['tanggal'];
+        // $mahasiswa->prodi_id = $validasi['prodi_id'];
 
         // upload foto
 
-        $ext = $request -> foto -> getClientOriginalExtension();
-        $new_filename = $validasi['npm'] . '.' . $ext;
-        $request -> foto -> storeAs('public', $new_filename);
+        // $ext = $request -> foto -> getClientOriginalExtension();
+        // $new_filename = $validasi['npm'] . '.' . $ext;
+        // $request -> foto -> storeAs('public', $new_filename);
 
-        $mahasiswa -> foto = $new_filename;
-        $mahasiswa -> save();
+        // $mahasiswa -> foto = $new_filename;
+        // $mahasiswa -> save();
         // $fileName = time() . '.' . $request->image->extension();
         // $request->image->storeAs('public/images', $fileName);
         
@@ -75,7 +87,7 @@ class MahasiswaController extends Controller
         // $mahasiswa->prodi_id = $request-> input('prodi_id');
         // $mahasiswa->save();
         
-        return redirect() -> route ('mahasiswa.index') -> with('success', 'Data berhasil disimpan' . $validasi['nama']);  
+        // return redirect() -> route ('mahasiswa.index') -> with('success', 'Data berhasil disimpan' . $validasi['nama']);  
         
         
     }

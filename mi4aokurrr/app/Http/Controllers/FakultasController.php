@@ -42,14 +42,17 @@ class FakultasController extends BaseController
             'nama_dekan' => 'required',
             'nama_wakil_dekan' => 'required'
         ]);
+        $result = Fakultas::create($validasi);
+        return $this -> sendSuccess($result, 'Fakultas berhasil ditambahkan', 201);
+       
+        
+        // $fakultas = new Fakultas();
+        // $fakultas-> nama_fakultas = $validasi['nama_fakultas'];
+        // $fakultas-> nama_dekan  = $validasi['nama_dekan'];
+        // $fakultas-> nama_wakil_dekan = $validasi['nama_wakil_dekan'];
 
-        $fakultas = new Fakultas();
-        $fakultas-> nama_fakultas = $validasi['nama_fakultas'];
-        $fakultas-> nama_dekan  = $validasi['nama_dekan'];
-        $fakultas-> nama_wakil_dekan = $validasi['nama_wakil_dekan'];
-
-        $fakultas->save();
-        return redirect() -> route('fakultas.index') -> with('success', 'Data berhasil disimpan');
+        // $fakultas->save();
+        // return redirect() -> route('fakultas.index') -> with('success', 'Data berhasil disimpan');
 
     }
 
@@ -80,8 +83,15 @@ class FakultasController extends BaseController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Fakultas $fakultas)
+    public function destroy($id)
     {
         //
+        $fakultas = Fakultas::findOrFail($id);
+        // jika ada data fakultas dg id = $id
+        if($fakultas->delete()){
+            return $this->sendSuccess([], 'data terhapus', 303);
+        }else{
+            return $this->sendError('', 'Data gagal dihapus', 400);
+        }
     }
 }

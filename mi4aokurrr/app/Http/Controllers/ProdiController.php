@@ -42,12 +42,15 @@ class ProdiController extends BaseController
             
         ]);
 
-        $prodi = new Prodi();
-        $prodi -> fakultas_id = $validasi['fakultas_id'];
-        $prodi -> nama_prodi = $validasi['nama_prodi'];
+        $result = Prodi::create($validasi);
+        return $this -> sendSuccess($result, 'Prodi berhasil ditambahkan', 201);
+        
+        // $prodi = new Prodi();
+        // $prodi -> fakultas_id = $validasi['fakultas_id'];
+        // $prodi -> nama_prodi = $validasi['nama_prodi'];
 
-        $prodi->save();
-        return redirect() -> route('prodi.index') -> with('success', 'Data berhasil disimpan');
+        // $prodi->save();
+        // return redirect() -> route('prodi.index') -> with('success', 'Data berhasil disimpan');
     }
 
     /**
