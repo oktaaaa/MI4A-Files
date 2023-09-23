@@ -15,7 +15,7 @@ class ProdiController extends BaseController
     public function index()
     {
         //
-        $prodi = Prodi::all();
+        $prodi = Prodi::with('fakultas')->get();
         // return view('prodi.index') -> with('prodi', $prodi);
         return $this->sendSuccess($prodi, 'Data Prodi', 200);
     }
